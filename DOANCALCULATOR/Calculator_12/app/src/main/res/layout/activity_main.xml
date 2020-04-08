@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="12"
+        android:orientation="vertical">
+
+        <!-- Tên: Phạm Huỳnh Thanh Lâm
+                  Bùi Văn Hà
+                  Nguyễn Huy Cường
+        Thời gian 31/3/2020-->
+        <!-- Editview dùng để ngõ các số vào, có viền lấy
+         từ file src/drawable-->
+        <EditText
+            android:id="@+id/edit_text"
+            android:fontFamily="monospace"
+            android:textSize="30dp"
+            android:background="@drawable/duongvienden"
+            android:layout_weight="2"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+        <!-- Linear có 4 button đánh số 7,8,9,dấu chia, có viền lấy
+             từ file src/drawable-->
+        <LinearLayout
+            android:background="@color/black"
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <Button
+                android:id="@+id/btn_7"
+                android:fontFamily="monospace"
+                android:background="@drawable/duongvien"
+                android:text="@string/_7"
+                android:textSize="40dp"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_8"
+                android:fontFamily="monospace"
+                android:background="@drawable/duongvien"
+                android:text="@string/_8"
+                android:textSize="40dp"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_9"
+                android:fontFamily="monospace"
+                android:background="@drawable/duongvien"
+                android:text="@string/_9"
+                android:textSize="40dp"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_chia"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongviencam"
+                android:text="÷"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!-- Linear có 4 button đánh số 4,5,6,dấu nhân, có viền lấy
+                 từ file src/drawable-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <Button
+                android:id="@+id/btn_4"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongvien"
+                android:text="@string/_4"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_5"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongvien"
+                android:text="@string/_5"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_6"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongvien"
+                android:text="@string/_6"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_x"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongviencam"
+                android:text="×"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!-- Linear có 4 button đánh số 1,2,3,dấu trừ, có viền lấy
+                 từ file src/drawable-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <Button
+                android:id="@+id/btn_1"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongvien"
+                android:text="@string/_1"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_2"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongvien"
+                android:text="@string/_2"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_3"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongvien"
+                android:text="@string/_3"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_tru"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongviencam"
+                android:text="-"
+                android:layout_weight="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!-- Linear có 3 button đánh số 0,dấu phẩy,dấu cộng, có viền lấy
+             từ file src/drawable-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <Button
+                android:id="@+id/btn_0"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongvien"
+                android:text="@string/_0"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_cham"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongvien"
+                android:text="."
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_cong"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongviencam"
+                android:text="+"
+                android:layout_weight="0.5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+
+        <!-- Linear có 2 button đánh số nút xóa,dấu bằng, có viền lấy
+             từ file src/drawable-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+            <Button
+                android:id="@+id/btn_C"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongviencam"
+                android:text="C"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <Button
+                android:id="@+id/btn_bang"
+                android:fontFamily="monospace"
+                android:textSize="40dp"
+                android:background="@drawable/duongviencam"
+                android:text="="
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
