@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.Stack;
@@ -23,17 +24,15 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
 
     private String[] array = new String[100];
-    private int n =0;
+    private int n = 0;
 
-    private int clear_flag = 0;
     private int flag = 0;
     private int flag_tinh = 0;
-    private int Trangthai = 0;
 
     private double val1=Double.NaN;
     private double val2;
 
-    private char ACTION;
+    private char ACTION = '0';
     private final char ADDITION = '+';
     private final char SUBTRACTION = '-';
     private final char MULTIPLICATION = '×';
@@ -47,76 +46,74 @@ public class MainActivity extends AppCompatActivity {
 
         setupUiView();
 
-
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "7";
-                shownum(t);
+                NhapSo(t);
             }
         });
         btn8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "8";
-                shownum(t);
-
+                NhapSo(t);
             }
         });
         btn9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "9";
-                shownum(t);
+                NhapSo(t);
             }
         });
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "4";
-                shownum(t);
+                NhapSo(t);
             }
         });
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "5";
-                shownum(t);
+                NhapSo(t);
             }
         });
         btn6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "6";
-                shownum(t);
+                NhapSo(t);
             }
         });
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "1";
-                shownum(t);
+                NhapSo(t);
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "2";
-                shownum(t);
+                NhapSo(t);
             }
         });
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "3";
-                shownum(t);
+                NhapSo(t);
             }
         });
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "0";
-                shownum(t);
+                NhapSo(t);
             }
         });
 
@@ -125,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String t = "÷";
-                flag = 0;
-                kiemtra(t);
+                NhapOperator(t,DIVISION);
             }
         });
 
@@ -134,24 +130,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String t = "×";
-                flag = 0;
-                kiemtra(t);
+                NhapOperator(t,MULTIPLICATION);
             }
         });
         btn_tru.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "-";
-                flag = 0;
-                kiemtra(t);
+                NhapOperator(t,SUBTRACTION);
             }
         });
         btn_cong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String t = "+";
-                flag = 0;
-                kiemtra(t);
+                NhapOperator(t,ADDITION);
             }
         });
 
@@ -174,11 +167,7 @@ public class MainActivity extends AppCompatActivity {
         btn_C.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                clear_flag = 0;
                 flag = 0;
-                val1 = Double.NaN;
-                val2 = Double.NaN;
-                Trangthai = 0;
                 flag_tinh = 0;
                 editText.setText("");
             }
@@ -186,20 +175,20 @@ public class MainActivity extends AppCompatActivity {
         btn_bang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(flag == 0)
-                {
+                if(flag == 0){
                     tinhtoan();
+                    ACTION = '0';
+                    flag_tinh = 0;
                     flag = 1;
                 }
                 else{
-                    editText.setText("0");
-                    flag = 0;
+                    //Toast.makeText(this,"Định dạng không hợp lệ",Toast.LENGTH_SHORT).show();
                 }
-                flag_tinh = 0;
-                clear_flag = 0;
             }
         });
     }
+
+
 
     private void setupUiView(){
         btn7=(Button)findViewById(R.id.btn_7);
@@ -222,11 +211,18 @@ public class MainActivity extends AppCompatActivity {
         editText=(EditText)findViewById(R.id.edit_text);
     }
 
+    private boolean kiemtradau(){
+        String text = editText.getText().toString().substring(editText.getText().toString().length()-1);
+        if(text.equals("+") || text.equals("-") || text.equals("×") || text.equals("÷")){
+            return true;
+        }
+        return false;
+    }
 
-    private void thuchien(){
-        val1 = Double.parseDouble(array[0]);
-        val2 = Double.parseDouble(array[2]);
-        char operator = array[1].charAt(0);
+    private void thuchientinhtoan(String t1, String t2, String dau){
+        val1 = Double.parseDouble(t1);
+        val2 = Double.parseDouble(t2);
+        char operator = dau.charAt(0);
         switch(operator){
             case ADDITION:
                 val1 = val1 + val2;
@@ -283,13 +279,23 @@ public class MainActivity extends AppCompatActivity {
     public void shownum(String num) {
         String lCurrentValue = editText.getText().toString();
         String lNewValue = num;
-        editText.setText(lCurrentValue+lNewValue);
+        if(lCurrentValue.equals("0"))
+        {
+            editText.setText(num);
+        }
+        else{
+            editText.setText(lCurrentValue+lNewValue);
+        }
     }
 
     public void tinhtoan() {
-        chuanhoa(editText.getText().toString());
-        thuchien();
+        chuanhoa(editText.getText().toString()); // 1+1 => 1 + 1
+        thuchientinhtoan(array[0],array[2],array[1]);// val1=1;val2=1
         n=0;
+        xuatkq();
+    }
+
+    public void xuatkq(){
         String t = String.valueOf(val1);
         String[] arStr = t.split("\\.");
         if(arStr[1].equals("0"))
@@ -301,16 +307,36 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void kiemtra(String operator){
-        if(clear_flag == 1) {
-            String name = editText.getText().toString();
-            String name2 = name.substring(0, name.length() - 1);
-            editText.setText(name2 + operator);
+    public void xuatdau(String operator) {
+        editText.setText(editText.getText() + operator);
+        flag_tinh = 1;
+    }
+
+    public void NhapSo(String t){
+        if(ACTION == '0' ){
+            shownum(t);
         }
         else{
-            editText.setText(editText.getText() + operator);
-            clear_flag = 1;
+            thuchientinhtoan(String.valueOf(val1),t,String.valueOf(ACTION));
+            xuatkq();
+            ACTION = '0';
         }
+    }
 
+    public void NhapOperator(String t,char operator){
+        flag = 0;
+        if(flag_tinh == 0){
+            xuatdau(t);
+            flag_tinh = 1;
+        }
+        else if(kiemtradau() == true){
+            String chuoimoi = editText.getText().toString().substring(0,editText.getText().toString().length()-1);
+            editText.setText(chuoimoi + t);
+        }
+        else{
+            tinhtoan();
+            ACTION = operator;
+            flag_tinh = 0;
+        }
     }
 }
