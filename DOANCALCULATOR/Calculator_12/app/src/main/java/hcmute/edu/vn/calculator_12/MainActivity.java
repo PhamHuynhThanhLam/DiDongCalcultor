@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.view.SubMenu;
@@ -41,12 +42,19 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean trangthai = false ;
 
+    SharedPreferences luugiatri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         setupUiView();
+
+        //Tạo luu giá trị
+        luugiatri = getSharedPreferences("GiaTri",MODE_PRIVATE);
+
+
 
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,8 +217,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 chuanhoa(editText.getText().toString()); // 1+1 => 1 + 1
                 if(n == 3){
-                    tinhtoan();
+                    thuchientinhtoan(array[0],array[2],array[1]);// val1=1;val2=1
+                    reset();
+                    xuatkq();
                     ACTION = '0';
+                    LuuGiaTri();
                     flag_tinh = 0;
                     n=0;
                 }
@@ -226,6 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
 
@@ -358,13 +370,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void NhapSo(String t){
-        if(ACTION == '0' ){
+        ACTION = luugiatri.getString("dau","").charAt(0);
+        if(ACTION == '0'){
             shownum(t);
         }
         else{
+            val1 = Double.parseDouble(luugiatri.getString("giatrival1",""));
             thuchientinhtoan(String.valueOf(val1),t,String.valueOf(ACTION));
             xuatkq();
             ACTION = '0';
+            LuuGiaTri();
         }
     }
 
@@ -376,7 +391,6 @@ public class MainActivity extends AppCompatActivity {
             if(flag_tinh == 0){
                 xuatdau(t);
                 flag_tinh = 1;
-                trangthai = false;
             }
             else if(kiemtradau() == true){
                 String chuoimoi = editText.getText().toString().substring(0,editText.getText().toString().length()-1);
@@ -385,13 +399,22 @@ public class MainActivity extends AppCompatActivity {
             else{
                 tinhtoan();
                 ACTION = operator;
+                LuuGiaTri();
                 flag_tinh = 0;
             }
+            trangthai = false;
         }
     }
 
     public void xuatdau(String operator) {
         editText.setText(editText.getText() + operator);
         flag_tinh = 1;
+    }
+
+    private void LuuGiaTri(){
+        SharedPreferences.Editor editor = luugiatri.edit();
+        editor.putString("dau",String.valueOf(ACTION));
+        editor.putString("giatrival1",String.valueOf(val1));
+        editor.commit();
     }
 }
