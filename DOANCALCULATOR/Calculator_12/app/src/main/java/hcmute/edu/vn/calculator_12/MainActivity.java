@@ -54,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         //Tạo luu giá trị
         luugiatri = getSharedPreferences("GiaTri",MODE_PRIVATE);
 
-
-
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
