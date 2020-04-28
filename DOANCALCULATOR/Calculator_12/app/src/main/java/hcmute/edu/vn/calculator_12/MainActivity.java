@@ -54,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         //Tạo luu giá trị
         luugiatri = getSharedPreferences("GiaTri",MODE_PRIVATE);
 
+        flag_tinh = luugiatri.getInt("Codau",0);
+
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -389,6 +391,7 @@ public class MainActivity extends AppCompatActivity {
             if(flag_tinh == 0){
                 xuatdau(t);
                 flag_tinh = 1;
+                LuuGiaTri();
             }
             else if(kiemtradau() == true){
                 String chuoimoi = editText.getText().toString().substring(0,editText.getText().toString().length()-1);
@@ -412,6 +415,7 @@ public class MainActivity extends AppCompatActivity {
     private void LuuGiaTri(){
         SharedPreferences.Editor editor = luugiatri.edit();
         editor.putString("dau",String.valueOf(ACTION));
+        editor.putInt("Codau",flag_tinh);
         editor.putString("giatrival1",String.valueOf(val1));
         editor.commit();
     }
