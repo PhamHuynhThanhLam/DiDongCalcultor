@@ -25,10 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private Button btn_cham;
     private EditText editText;
 
+
     private String[] array = new String[100];
     private int n = 0;
-
-    private int flag_tinh = 0;
 
     private double val1=Double.NaN;
     private double val2;
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity {
 
         //Tạo luu giá trị
         luugiatri = getSharedPreferences("GiaTri",MODE_PRIVATE);
-
-        flag_tinh = luugiatri.getInt("Codau",0);
 
         trangthai = luugiatri.getBoolean("Trangthaidau", false);
 
@@ -228,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
                     xuatkq();
                     ACTION = '0';
                     LuuGiaTri();
-                    flag_tinh = 0;
+                    //flag = 0;
+                    LuuCo.setflag(0);
                     n=0;
                 }
                 else if(!isOperator(array[0])){
@@ -271,7 +269,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void reset(){
         n=0;
-        flag_tinh = 0;
+        //flag_tinh = 0;
+        LuuCo.setflag(0);
         array[0] = "0";
         array[1] = "0";
         array[2] = "0";
@@ -412,9 +411,10 @@ public class MainActivity extends AppCompatActivity {
             editText.setText("");
         }
         else{
-            if(flag_tinh == 0){
+            if(/*flag_tinh == 0*/LuuCo.getFlag() == 0){
                 xuatdau(t);
-                flag_tinh = 1;
+                //flag_tinh = 1;
+                LuuCo.setflag(1);
                 trangthai = false;
                 LuuGiaTri();
             }
@@ -425,7 +425,8 @@ public class MainActivity extends AppCompatActivity {
             else{
                 tinhtoan();
                 ACTION = operator;
-                flag_tinh = 0;
+                //flag_tinh = 0;
+                LuuCo.setflag(0);
                 LuuGiaTri();
             }
 
@@ -434,13 +435,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void xuatdau(String operator) {
         editText.setText(editText.getText() + operator);
-        flag_tinh = 1;
+        //flag_tinh = 1;
+        LuuCo.setflag(1);
     }
 
     private void LuuGiaTri(){
         SharedPreferences.Editor editor = luugiatri.edit();
         editor.putString("dau",String.valueOf(ACTION));
-        editor.putInt("Codau",flag_tinh);
+        //editor.putInt("Codau",flag_tinh);
         editor.putBoolean("Trangthaidau",trangthai);
         editor.putString("giatrival1",String.valueOf(val1));
         editor.commit();
@@ -450,7 +452,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-
+       // flag_tinh = luugiatri.getInt("Codau",0);
         super.onDestroy();
     }
 }
