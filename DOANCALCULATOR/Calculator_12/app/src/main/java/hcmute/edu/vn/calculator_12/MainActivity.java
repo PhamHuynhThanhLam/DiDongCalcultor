@@ -425,8 +425,8 @@ public class MainActivity extends AppCompatActivity {
             else{
                 tinhtoan();
                 ACTION = operator;
-                LuuGiaTri();
                 flag_tinh = 0;
+                LuuGiaTri();
             }
 
         }
