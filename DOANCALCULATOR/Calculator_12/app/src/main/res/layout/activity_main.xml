@@ -26,7 +26,8 @@
             android:layout_weight="2"
             android:gravity="right"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="0dp"
+            android:maxLength="20"/>
         <!-- Linear có 4 button đánh số 7,8,9,dấu chia, có viền lấy
              từ file src/drawable-->
         <LinearLayout

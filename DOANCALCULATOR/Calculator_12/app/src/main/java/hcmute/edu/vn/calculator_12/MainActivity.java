@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private final char EQU = 0;
 
     private boolean trangthai = false ;
+    private boolean temp = true;
 
     SharedPreferences luugiatri;
 
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         luugiatri = getSharedPreferences("GiaTri",MODE_PRIVATE);
 
         flag_tinh = luugiatri.getInt("Codau",0);
+
+        trangthai = luugiatri.getBoolean("Trangthaidau", false);
 
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +196,10 @@ public class MainActivity extends AppCompatActivity {
                     if(editText.getText().toString().equals("")){
                         editText.setText("0.");
                     }
-                    else{
+                    else if(demdau == 1){
+                        editText.setText(editText.getText() + "0.");
+                    }
+                    else {
                         editText.setText(editText.getText() + t);
                     }
                 }
@@ -269,6 +275,12 @@ public class MainActivity extends AppCompatActivity {
         array[0] = "0";
         array[1] = "0";
         array[2] = "0";
+        SharedPreferences.Editor editor = luugiatri.edit();
+        editor.remove("dau");
+        editor.remove("Codau");
+        editor.remove("Trangthaidau");
+        editor.remove("giatrival1");
+        editor.commit();
     }
 
     private boolean kiemtradau(){
@@ -294,7 +306,12 @@ public class MainActivity extends AppCompatActivity {
                 val1 = val1 * val2;
                 break;
             case DIVISION:
-                val1 = val1 / val2;
+                if(val2 == 0){
+                    temp = false;
+                }
+                else {
+                    val1 = val1 / val2;
+                }
                 break;
             case EQU:
                 break;
@@ -348,7 +365,13 @@ public class MainActivity extends AppCompatActivity {
         trangthai = true;
         String t = String.valueOf(val1);
         String[] arStr = t.split("\\.");
-        if(arStr[1].equals("0"))
+        if(temp == false)
+        {
+            editText.setText("");
+            Toast.makeText(this, "Không thể chia cho 0", Toast.LENGTH_SHORT).show();
+            temp = true;
+        }
+        else if(arStr[1].equals("0"))
         {
             editText.setText(arStr[0]);
         }
@@ -363,6 +386,7 @@ public class MainActivity extends AppCompatActivity {
         if(trangthai == true){
             editText.setText(lNewValue);
             trangthai = false;
+            LuuGiaTri();
         }
         else{
             editText.setText(lCurrentValue+lNewValue);
@@ -370,12 +394,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void NhapSo(String t){
-        ACTION = luugiatri.getString("dau","").charAt(0);
+        ACTION = luugiatri.getString("dau","0").charAt(0);
         if(ACTION == '0'){
             shownum(t);
         }
         else{
-            val1 = Double.parseDouble(luugiatri.getString("giatrival1",""));
+            val1 = Double.parseDouble(luugiatri.getString("giatrival1","0"));
             thuchientinhtoan(String.valueOf(val1),t,String.valueOf(ACTION));
             xuatkq();
             ACTION = '0';
@@ -391,6 +415,7 @@ public class MainActivity extends AppCompatActivity {
             if(flag_tinh == 0){
                 xuatdau(t);
                 flag_tinh = 1;
+                trangthai = false;
                 LuuGiaTri();
             }
             else if(kiemtradau() == true){
@@ -403,7 +428,7 @@ public class MainActivity extends AppCompatActivity {
                 LuuGiaTri();
                 flag_tinh = 0;
             }
-            trangthai = false;
+
         }
     }
 
@@ -416,7 +441,16 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = luugiatri.edit();
         editor.putString("dau",String.valueOf(ACTION));
         editor.putInt("Codau",flag_tinh);
+        editor.putBoolean("Trangthaidau",trangthai);
         editor.putString("giatrival1",String.valueOf(val1));
         editor.commit();
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+
+        super.onDestroy();
     }
 }
